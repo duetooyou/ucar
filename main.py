@@ -39,7 +39,7 @@ class ReviewResponse(BaseModel):
 
 def analyze_sentiment(text: str) -> str:
     text_lower = text.lower()
-    print(text_lower)
+
     sentiment_dict = {
         'positive': ('хорош', 'люблю'),
         'negative': ('плохо', 'ненавижу')
