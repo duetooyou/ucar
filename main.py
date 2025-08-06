@@ -4,7 +4,7 @@ from typing import Optional, List
 from fastapi import FastAPI, HTTPException, Query
 from pydantic import BaseModel
 
-app = FastAPI(title="Review Sentiment Analysis Service")
+app = FastAPI(title="Простой сервис отзывов")
 
 
 # initialize database
@@ -39,27 +39,27 @@ class ReviewResponse(BaseModel):
 
 def analyze_sentiment(text: str) -> str:
     text_lower = text.lower()
-
+    print(text_lower)
     sentiment_dict = {
-        'positive': ['хорош', 'люблю', 'отлич', 'замечательн', 'прекрасн', 'нравится', 'супер', 'класс', 'круто'],
-        'negative': ['плохо', 'ненавиж', 'ужасн', 'отвратительн', 'не нравится', 'кошмар', 'гадость']
+        'positive': ('хорош', 'люблю'),
+        'negative': ('плохо', 'ненавижу')
     }
-
-    for word in sentiment_dict['positive']:
+    
+    for word in sentiment_dict.get('positive'):
         if word in text_lower:
             return 'positive'
-
-    for word in sentiment_dict['negative']:
+    
+    for word in sentiment_dict.get('negative'):
         if word in text_lower:
             return 'negative'
-
+    
     return 'neutral'
 
 
 # health check
 @app.get("/")
 async def root():
-    return {"message": "Review Sentiment Analysis Service", "version": "1.0"}
+    return {"message": "Простой сервис"}
 
 
 @app.post("/reviews", response_model=ReviewResponse)
